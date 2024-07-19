@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <a class="navbar-brand mx-3" href="#">rss-reader</a>
+      <NuxtLink class="navbar-brand mx-3" to="/">rss-reader</NuxtLink>
       <div class="collapse navbar-collapse justify-content-end mx-3">
         <ul class="navbar-nav">
           <li class="nav-item ">
