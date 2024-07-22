@@ -5,7 +5,25 @@ const route = useRoute();
 const urls = dataStore.getGroupUrls(route.params.group).urls;
 
 const response = useFetch("/api/getRssItems", { query: { urls } });
+
+const getDateTime = (dateString) => {
+  return dateString.slice(5);
+}
 </script>
+
+<style scoped>
+.site {
+  font-size: 70%;
+  color: grey;
+}
+.site a {
+  text-decoration: none;
+  color: grey;
+}
+.item a {
+  text-decoration: none;
+}
+</style>
 
 <template>
   <section class="container-fluid mt-2">
@@ -18,7 +36,11 @@ const response = useFetch("/api/getRssItems", { query: { urls } });
       <tbody>
         <tr v-for="rss in response.data.value" :key="rss">
           <td>
-            <a :href="rss.item.link">{{ rss.item.title }}</a>
+            <div class="site">
+              {{ getDateTime(rss.item.date) }}　
+              <a :href="rss.site.link">{{ rss.site.name }}</a>
+            </div>
+            <div class="item"><a :href="rss.item.link">{{ rss.item.title }}</a></div>
           </td>
         </tr>
       </tbody>
