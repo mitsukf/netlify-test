@@ -56,5 +56,7 @@ export const userDataStore = defineStore("userData", {
       this.groups = groups;
     },
   },
-  persist: true, // 状態の永続化設定
+  persist: {
+    storage: persistedState.localStorage,
+  },
 });

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { Group, Setting } from "~/composables/type";
+// @ts-ignore
+import draggable from "vuedraggable";
 
 const dataStore = userDataStore();
 const { groups, setGroups } = dataStore;
@@ -77,29 +79,41 @@ const isSettingChanged = () => {
           <th>設定項目</th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="(group, index) in settings" :key="index">
-          <td>
-            {{ index + 1 }}
-          </td>
-          <td>
-            <div class="input-group">
-              <span class="input-group-text" style="width: 70px">設定名</span>
-              <input type="text" class="form-control" v-model="group.name" />
-            </div>
-            <div class="input-group mt-1">
-              <span class="input-group-text" style="width: 70px">URL</span>
-              <textarea class="form-control" v-model="group.urls" />
-            </div>
-            <button
-              class="btn btn-danger btn-sm mt-1"
-              @click="delSetting(index)"
-            >
-              削除
-            </button>
-          </td>
-        </tr>
-      </tbody>
+      <draggable
+        v-model="settings"
+        group="people"
+        item-key="name"
+        tag="tbody"
+        handle=".handle"
+      >
+        <template #item="{ element, index }">
+          <tr class="drag-item">
+            <td class="handle">
+              {{ index + 1 }}
+            </td>
+            <td>
+              <div class="input-group">
+                <span class="input-group-text" style="width: 70px">設定名</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="element.name"
+                />
+              </div>
+              <div class="input-group mt-1">
+                <span class="input-group-text" style="width: 70px">URL</span>
+                <textarea class="form-control" v-model="element.urls" />
+              </div>
+              <button
+                class="btn btn-danger btn-sm mt-1"
+                @click="delSetting(index)"
+              >
+                削除
+              </button>
+            </td>
+          </tr>
+        </template>
+      </draggable>
     </table>
     <button class="btn btn-primary" @click="addSetting()">追加</button>
     <button

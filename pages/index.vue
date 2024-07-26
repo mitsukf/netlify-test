@@ -5,7 +5,7 @@ const dataStore = userDataStore();
 const { init } = dataStore;
 const { getGroupNames } = storeToRefs(dataStore);
 
-init();
+//init();
 const items = getGroupNames;
 </script>
 

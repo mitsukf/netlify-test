@@ -2,13 +2,22 @@
 const dataStore = userDataStore();
 const route = useRoute();
 
-const urls = dataStore.getGroupUrls(route.params.group).urls;
+console.log("▲▲▲▲▲");
+const group = dataStore.getGroupUrls(route.params.group);
+let urls = [];
+if (group) {
+  console.log("1こっち");
+  urls = group.urls;
+}
 
+console.log("■■■■■");
+console.log(urls);
 const response = useFetch("/api/getRssItems", { query: { urls } });
 
+// 日付フォーマットから日時を取得
 const getDateTime = (dateString) => {
   return dateString.slice(5);
-}
+};
 </script>
 
 <style scoped>
@@ -40,7 +49,9 @@ const getDateTime = (dateString) => {
               {{ getDateTime(rss.item.date) }}　
               <a :href="rss.site.link">{{ rss.site.name }}</a>
             </div>
-            <div class="item"><a :href="rss.item.link">{{ rss.item.title }}</a></div>
+            <div class="item">
+              <a :href="rss.item.link">{{ rss.item.title }}</a>
+            </div>
           </td>
         </tr>
       </tbody>
